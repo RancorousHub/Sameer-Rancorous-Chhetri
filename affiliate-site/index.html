@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GadgetPick — Honest Tech Reviews & Best Deals</title>
+    <meta name="description" content="GadgetPick helps you find the best tech gadgets with honest, in-depth reviews. Phones, laptops, accessories, and more — we test so you don't have to.">
+    <meta name="keywords" content="tech reviews, best gadgets, phone reviews, laptop reviews, tech deals, gadget comparison">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">Gadget<span>Pick</span></a>
+            <ul class="nav-links">
+                <li><a href="#featured">Featured</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#latest">Latest Reviews</a></li>
+                <li><a href="#deals">Deals</a></li>
+                <li><a href="#newsletter" class="btn btn-nav">Subscribe</a></li>
+            </ul>
+            <button class="mobile-toggle" aria-label="Toggle menu">&#9776;</button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">Trusted by 10,000+ Readers</span>
+                <h1>Find the <span class="highlight">Best Tech</span> Without the Guesswork</h1>
+                <p>Honest, hands-on reviews of the latest gadgets. We test everything so you can buy with confidence.</p>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search for a product (e.g., 'best wireless earbuds')...">
+                    <button class="btn btn-primary" id="searchBtn">Search</button>
+                </div>
+                <div class="hero-tags">
+                    <span>Popular:</span>
+                    <a href="#" class="hero-tag">iPhone 16</a>
+                    <a href="#" class="hero-tag">Best Laptops 2026</a>
+                    <a href="#" class="hero-tag">Wireless Earbuds</a>
+                    <a href="#" class="hero-tag">Gaming Monitors</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="featured" class="featured">
+        <div class="container">
+            <h2 class="section-title">Editor's Picks</h2>
+            <p class="section-sub">Our top-rated products this month</p>
+            <div class="featured-grid">
+                <article class="product-card featured-main">
+                    <div class="product-image">
+                        <span class="badge badge-gold">Editor's Choice</span>
+                        <div class="img-placeholder large">Featured Product</div>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-meta">
+                            <span class="category-tag">Smartphones</span>
+                            <div class="rating">
+                                <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                                <span class="rating-num">9.5/10</span>
+                            </div>
+                        </div>
+                        <h3>Samsung Galaxy S26 Ultra Review</h3>
+                        <p>The best Android phone money can buy. Incredible camera, stunning display, and all-day battery life make this the clear winner.</p>
+                        <div class="product-footer">
+                            <span class="price">$1,199</span>
+                            <a href="#" class="btn btn-primary btn-sm">Check Best Price &rarr;</a>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="featured-side">
+                    <article class="product-card horizontal">
+                        <div class="img-placeholder small">Product</div>
+                        <div class="product-body">
+                            <span class="category-tag">Laptops</span>
+                            <h4>MacBook Pro M4 Max</h4>
+                            <div class="rating-inline">
+                                <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                                <span>9.3/10</span>
+                            </div>
+                            <a href="#" class="link-arrow">Read Review &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="product-card horizontal">
+                        <div class="img-placeholder small">Product</div>
+                        <div class="product-body">
+                            <span class="category-tag">Audio</span>
+                            <h4>Sony WH-1000XM6</h4>
+                            <div class="rating-inline">
+                                <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                                <span>8.8/10</span>
+                            </div>
+                            <a href="#" class="link-arrow">Read Review &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="product-card horizontal">
+                        <div class="img-placeholder small">Product</div>
+                        <div class="product-body">
+                            <span class="category-tag">Wearables</span>
+                            <h4>Apple Watch Ultra 3</h4>
+                            <div class="rating-inline">
+                                <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                                <span>8.6/10</span>
+                            </div>
+                            <a href="#" class="link-arrow">Read Review &rarr;</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="categories" class="categories">
+        <div class="container">
+            <h2 class="section-title">Browse by Category</h2>
+            <p class="section-sub">Find exactly what you're looking for</p>
+            <div class="category-grid">
+                <a href="#" class="category-card">
+                    <div class="category-icon">&#128241;</div>
+                    <h3>Smartphones</h3>
+                    <span>24 Reviews</span>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">&#128187;</div>
+                    <h3>Laptops</h3>
+                    <span>18 Reviews</span>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">&#127911;</div>
+                    <h3>Audio</h3>
+                    <span>15 Reviews</span>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">&#9000;</div>
+                    <h3>Monitors</h3>
+                    <span>12 Reviews</span>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">&#9889;</div>
+                    <h3>Accessories</h3>
+                    <span>30 Reviews</span>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">&#127918;</div>
+                    <h3>Gaming</h3>
+                    <span>20 Reviews</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="latest" class="latest-reviews">
+        <div class="container">
+            <h2 class="section-title">Latest Reviews</h2>
+            <p class="section-sub">Fresh takes on the newest tech</p>
+            <div class="reviews-grid">
+                <article class="review-card">
+                    <div class="img-placeholder medium">Review Image</div>
+                    <div class="review-body">
+                        <div class="review-meta">
+                            <span class="category-tag">Smartphones</span>
+                            <span class="date">Mar 10, 2026</span>
+                        </div>
+                        <h3>Google Pixel 10 Pro: The Camera King Returns</h3>
+                        <p>Google's latest flagship delivers the best mobile camera experience we've ever tested, but is that enough?</p>
+                        <div class="review-footer">
+                            <div class="score">
+                                <span class="score-number">8.9</span>
+                                <span class="score-label">Excellent</span>
+                            </div>
+                            <a href="#" class="link-arrow">Full Review &rarr;</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="review-card">
+                    <div class="img-placeholder medium">Review Image</div>
+                    <div class="review-body">
+                        <div class="review-meta">
+                            <span class="category-tag">Audio</span>
+                            <span class="date">Mar 8, 2026</span>
+                        </div>
+                        <h3>AirPods Pro 3: Worth the Upgrade?</h3>
+                        <p>Apple's newest earbuds pack hearing health features and improved ANC. We put them through their paces.</p>
+                        <div class="review-footer">
+                            <div class="score">
+                                <span class="score-number">9.0</span>
+                                <span class="score-label">Excellent</span>
+                            </div>
+                            <a href="#" class="link-arrow">Full Review &rarr;</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="review-card">
+                    <div class="img-placeholder medium">Review Image</div>
+                    <div class="review-body">
+                        <div class="review-meta">
+                            <span class="category-tag">Laptops</span>
+                            <span class="date">Mar 5, 2026</span>
+                        </div>
+                        <h3>Dell XPS 15 (2026): Slim, Powerful, Pricey</h3>
+                        <p>Dell's flagship ultrabook gets a major refresh with Intel's latest chips. Here's what you need to know.</p>
+                        <div class="review-footer">
+                            <div class="score">
+                                <span class="score-number">8.5</span>
+                                <span class="score-label">Great</span>
+                            </div>
+                            <a href="#" class="link-arrow">Full Review &rarr;</a>
+                        </div>
+                    </div>
+                </article>
+                <article class="review-card">
+                    <div class="img-placeholder medium">Review Image</div>
+                    <div class="review-body">
+                        <div class="review-meta">
+                            <span class="category-tag">Gaming</span>
+                            <span class="date">Mar 3, 2026</span>
+                        </div>
+                        <h3>Best Budget Gaming Monitors Under $300</h3>
+                        <p>You don't need to spend big for a great gaming experience. These monitors prove it.</p>
+                        <div class="review-footer">
+                            <div class="score">
+                                <span class="score-number">—</span>
+                                <span class="score-label">Roundup</span>
+                            </div>
+                            <a href="#" class="link-arrow">Full Review &rarr;</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="comparison">
+        <div class="container">
+            <h2 class="section-title">Quick Comparisons</h2>
+            <p class="section-sub">Side-by-side specs to help you decide</p>
+            <div class="comparison-table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th class="highlight-col">Samsung S26 Ultra</th>
+                            <th>iPhone 16 Pro Max</th>
+                            <th>Pixel 10 Pro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Price</td>
+                            <td class="highlight-col">$1,199</td>
+                            <td>$1,199</td>
+                            <td>$999</td>
+                        </tr>
+                        <tr>
+                            <td>Display</td>
+                            <td class="highlight-col">6.9" AMOLED 120Hz</td>
+                            <td>6.9" OLED 120Hz</td>
+                            <td>6.7" OLED 120Hz</td>
+                        </tr>
+                        <tr>
+                            <td>Camera</td>
+                            <td class="highlight-col">200MP Main</td>
+                            <td>48MP Main</td>
+                            <td>50MP Main</td>
+                        </tr>
+                        <tr>
+                            <td>Battery</td>
+                            <td class="highlight-col">5,500 mAh</td>
+                            <td>4,685 mAh</td>
+                            <td>5,100 mAh</td>
+                        </tr>
+                        <tr>
+                            <td>Our Rating</td>
+                            <td class="highlight-col"><strong>9.5/10</strong></td>
+                            <td><strong>9.2/10</strong></td>
+                            <td><strong>8.9/10</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="highlight-col"><a href="#" class="btn btn-primary btn-sm">Best Price</a></td>
+                            <td><a href="#" class="btn btn-outline btn-sm">Best Price</a></td>
+                            <td><a href="#" class="btn btn-outline btn-sm">Best Price</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="deals" class="deals">
+        <div class="container">
+            <h2 class="section-title">Today's Best Deals</h2>
+            <p class="section-sub">Limited-time prices on top-rated products</p>
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <div class="deal-badge">-32%</div>
+                    <div class="img-placeholder small">Deal</div>
+                    <h4>Sony WH-1000XM6</h4>
+                    <div class="deal-pricing">
+                        <span class="deal-original">$399</span>
+                        <span class="deal-current">$269</span>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm btn-full">Get Deal &rarr;</a>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-badge">-25%</div>
+                    <div class="img-placeholder small">Deal</div>
+                    <h4>iPad Air M3</h4>
+                    <div class="deal-pricing">
+                        <span class="deal-original">$799</span>
+                        <span class="deal-current">$599</span>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm btn-full">Get Deal &rarr;</a>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-badge">-40%</div>
+                    <div class="img-placeholder small">Deal</div>
+                    <h4>Logitech MX Master 4</h4>
+                    <div class="deal-pricing">
+                        <span class="deal-original">$99</span>
+                        <span class="deal-current">$59</span>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm btn-full">Get Deal &rarr;</a>
+                </div>
+                <div class="deal-card">
+                    <div class="deal-badge">-20%</div>
+                    <div class="img-placeholder small">Deal</div>
+                    <h4>Samsung T9 SSD 2TB</h4>
+                    <div class="deal-pricing">
+                        <span class="deal-original">$179</span>
+                        <span class="deal-current">$143</span>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm btn-full">Get Deal &rarr;</a>
+                </div>
+            </div>
+            <p class="deals-disclaimer">* Prices may vary. Links may earn us a commission at no extra cost to you.</p>
+        </div>
+    </section>
+
+    <section id="newsletter" class="newsletter">
+        <div class="container">
+            <div class="newsletter-box">
+                <h2>Never Miss a Deal</h2>
+                <p>Get weekly roundups of the best tech deals and new reviews straight to your inbox.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+                <span class="newsletter-note">Free. No spam. Unsubscribe anytime.</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="logo">Gadget<span>Pick</span></a>
+                    <p>Honest tech reviews to help you make smarter buying decisions.</p>
+                    <p class="affiliate-disclosure"><strong>Affiliate Disclosure:</strong> We earn commissions from qualifying purchases through our links. This doesn't affect our editorial independence.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#">Smartphones</a></li>
+                        <li><a href="#">Laptops</a></li>
+                        <li><a href="#">Audio</a></li>
+                        <li><a href="#">Gaming</a></li>
+                        <li><a href="#">Accessories</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">How We Test</a></li>
+                        <li><a href="#">Editorial Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 GadgetPick. All rights reserved. Product prices and availability are subject to change.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
