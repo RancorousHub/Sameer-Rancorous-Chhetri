@@ -1,0 +1,589 @@
+/* ========== Reset & Base ========== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0a0e17;
+    --surface: #111827;
+    --surface-hover: #1a2332;
+    --border: #1e293b;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --accent: #6366f1;
+    --accent-glow: rgba(99, 102, 241, 0.3);
+    --accent-light: #818cf8;
+    --green: #22c55e;
+    --green-glow: rgba(34, 197, 94, 0.3);
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --radius: 12px;
+    --radius-sm: 8px;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ========== App Container ========== */
+.app {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+}
+
+/* ========== Header ========== */
+.header {
+    text-align: center;
+    padding: 24px 0 16px;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--accent-light), var(--accent), #a855f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+    color: var(--text-dim);
+    font-size: 0.875rem;
+    margin-top: 4px;
+}
+
+/* ========== Sections ========== */
+.section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+}
+
+section {
+    margin-bottom: 24px;
+}
+
+/* ========== Visualizer ========== */
+.visualizer-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+}
+
+#waveformCanvas {
+    width: 100%;
+    height: 120px;
+    display: block;
+}
+
+#spectrumCanvas {
+    width: 100%;
+    height: 60px;
+    display: block;
+    border-top: 1px solid var(--border);
+}
+
+/* ========== Frequency Display ========== */
+.control-section {
+    text-align: center;
+}
+
+.freq-display {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.freq-input {
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    background: none;
+    border: none;
+    color: var(--text);
+    text-align: right;
+    width: 220px;
+    outline: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.freq-input:focus {
+    border-bottom-color: var(--accent);
+}
+
+.freq-input::-webkit-inner-spin-button,
+.freq-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.freq-input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.freq-unit {
+    font-size: 1.25rem;
+    color: var(--text-dim);
+    font-weight: 500;
+}
+
+.freq-note {
+    font-size: 1rem;
+    color: var(--accent-light);
+    font-weight: 600;
+    margin-top: 2px;
+    min-height: 1.5em;
+}
+
+/* ========== Frequency Slider ========== */
+.freq-slider-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.slider-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+    min-width: 40px;
+}
+
+.freq-slider,
+.volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+
+.freq-slider::-webkit-slider-thumb,
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.freq-slider::-webkit-slider-thumb:hover,
+.volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.freq-slider::-moz-range-thumb,
+.volume-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    box-shadow: 0 0 10px var(--accent-glow);
+    cursor: pointer;
+}
+
+/* ========== Fine Tune Buttons ========== */
+.fine-controls {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.fine-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    color: var(--text-dim);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.fine-btn:hover {
+    color: var(--text);
+    background: var(--surface-hover);
+    border-color: var(--accent);
+}
+
+.fine-btn:active {
+    transform: scale(0.95);
+}
+
+/* ========== Play Button ========== */
+.play-section {
+    text-align: center;
+}
+
+.play-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--green);
+    background: transparent;
+    color: var(--green);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 0 20px var(--green-glow);
+}
+
+.play-btn:hover {
+    background: rgba(34, 197, 94, 0.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 30px var(--green-glow);
+}
+
+.play-btn:active {
+    transform: scale(0.95);
+}
+
+.play-btn.playing {
+    border-color: var(--red);
+    color: var(--red);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.play-btn.playing:hover {
+    background: rgba(239, 68, 68, 0.1);
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+}
+
+/* ========== Waveform Selection ========== */
+.waveform-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.wave-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 8px;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.wave-btn:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    background: var(--surface-hover);
+}
+
+.wave-btn.active {
+    border-color: var(--accent);
+    color: var(--accent-light);
+    background: rgba(99, 102, 241, 0.08);
+}
+
+.wave-btn svg {
+    opacity: 0.7;
+}
+
+.wave-btn.active svg,
+.wave-btn:hover svg {
+    opacity: 1;
+}
+
+/* ========== Volume ========== */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.vol-icon {
+    color: var(--text-dim);
+    flex-shrink: 0;
+}
+
+.volume-value {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    min-width: 36px;
+    text-align: right;
+}
+
+/* ========== Presets ========== */
+.preset-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.preset-tab {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+}
+
+.preset-tab:hover {
+    color: var(--text);
+    border-color: var(--accent);
+}
+
+.preset-tab.active {
+    color: var(--accent-light);
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--accent);
+}
+
+.preset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 6px;
+}
+
+.preset-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.preset-btn:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+}
+
+.preset-btn .preset-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.preset-btn .preset-freq {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    margin-top: 2px;
+}
+
+/* ========== Binaural ========== */
+.binaural-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+}
+
+.binaural-note {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+}
+
+.binaural-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.binaural-label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.binaural-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.binaural-input {
+    width: 70px;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    outline: none;
+}
+
+.binaural-input:focus {
+    border-color: var(--accent);
+}
+
+.binaural-info {
+    font-size: 0.8rem;
+    color: var(--accent-light);
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+/* ========== Sweep ========== */
+.sweep-controls {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+}
+
+.sweep-range {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.sweep-range label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sweep-input {
+    width: 80px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    outline: none;
+}
+
+.sweep-input:focus {
+    border-color: var(--accent);
+}
+
+.sweep-btn {
+    padding: 10px 24px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.sweep-btn:hover {
+    background: var(--accent-light);
+    transform: translateY(-1px);
+}
+
+.sweep-btn:active {
+    transform: translateY(0);
+}
+
+.sweep-btn.sweeping {
+    background: var(--red);
+}
+
+/* ========== Footer ========== */
+.footer {
+    text-align: center;
+    padding: 24px 0 8px;
+    border-top: 1px solid var(--border);
+}
+
+.footer p {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 480px) {
+    .freq-input {
+        font-size: 2.25rem;
+        width: 160px;
+    }
+
+    .waveform-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .fine-controls {
+        flex-wrap: wrap;
+    }
+
+    .sweep-range {
+        flex-direction: column;
+    }
+
+    .preset-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ========== Scrollbar ========== */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-dim);
+}
