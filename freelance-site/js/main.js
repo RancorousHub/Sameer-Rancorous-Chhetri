@@ -2,18 +2,18 @@
 const mobileToggle = document.querySelector('.mobile-toggle');
 const navLinks = document.querySelector('.nav-links');
 
-if (mobileToggle) {
+if (mobileToggle && navLinks) {
     mobileToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
     });
-}
 
-// Close mobile nav on link click
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
+    // Close mobile nav on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
     });
-});
+}
 
 // Contact form handling
 const contactForm = document.getElementById('contactForm');
@@ -31,30 +31,30 @@ if (contactForm) {
         // Show success message
         const btn = contactForm.querySelector('button[type="submit"]');
         const originalText = btn.textContent;
+        const originalBg = getComputedStyle(btn).backgroundColor;
         btn.textContent = 'Message Sent!';
         btn.style.background = '#00d4aa';
         contactForm.reset();
 
         setTimeout(() => {
             btn.textContent = originalText;
-            btn.style.background = '';
+            btn.style.removeProperty('background');
         }, 3000);
     });
 }
 
 // Navbar scroll effect
-let lastScroll = 0;
 const navbar = document.querySelector('.navbar');
 
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    if (currentScroll > 50) {
-        navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-    } else {
-        navbar.style.boxShadow = 'none';
-    }
-    lastScroll = currentScroll;
-});
+if (navbar) {
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 50) {
+            navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+        } else {
+            navbar.style.boxShadow = 'none';
+        }
+    });
+}
 
 // Animate elements on scroll
 const observerOptions = {
@@ -67,6 +67,7 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
         }
     });
 }, observerOptions);

@@ -80,7 +80,12 @@ class FrequencyGenerator {
 
     init() {
         if (this.audioCtx) return;
-        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) {
+            alert('Your browser does not support the Web Audio API. Please use a modern browser.');
+            return;
+        }
+        this.audioCtx = new AudioCtx();
         this.analyser = this.audioCtx.createAnalyser();
         this.analyser.fftSize = 2048;
         this.analyser.smoothingTimeConstant = 0.8;

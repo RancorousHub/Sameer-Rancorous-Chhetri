@@ -2,23 +2,23 @@
 const mobileToggle = document.querySelector('.mobile-toggle');
 const navLinks = document.querySelector('.nav-links');
 
-if (mobileToggle) {
+if (mobileToggle && navLinks) {
     mobileToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
     });
-}
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
     });
-});
+}
 
 // Search functionality
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 
-if (searchBtn) {
+if (searchBtn && searchInput) {
     searchBtn.addEventListener('click', () => {
         const query = searchInput.value.trim();
         if (query) {
@@ -49,7 +49,7 @@ if (newsletterForm) {
 
         setTimeout(() => {
             btn.textContent = 'Subscribe';
-            btn.style.background = '';
+            btn.style.removeProperty('background');
         }, 3000);
     });
 }
@@ -60,6 +60,7 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
         }
     });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
@@ -73,8 +74,10 @@ document.querySelectorAll('.product-card, .category-card, .review-card, .deal-ca
 
 // Navbar shadow on scroll
 const navbar = document.querySelector('.navbar');
-window.addEventListener('scroll', () => {
-    navbar.style.boxShadow = window.pageYOffset > 30
-        ? '0 2px 20px rgba(0,0,0,0.08)'
-        : 'none';
-});
+if (navbar) {
+    window.addEventListener('scroll', () => {
+        navbar.style.boxShadow = window.pageYOffset > 30
+            ? '0 2px 20px rgba(0,0,0,0.08)'
+            : 'none';
+    });
+}
