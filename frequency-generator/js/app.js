@@ -260,6 +260,8 @@ const app = {
         this.cacheDOM();
         this.bindEvents();
         this.renderPresets('notes');
+        // Sync slider position to match the default 440Hz using log scale
+        this.freqSlider.value = this.freqToSlider(440);
         this.updateNoteDisplay();
         this.startVisualization();
     },
@@ -295,7 +297,7 @@ const app = {
         this.freqSlider.addEventListener('input', () => {
             // Logarithmic slider mapping for intuitive control
             const val = this.sliderToFreq(parseFloat(this.freqSlider.value));
-            this.setFrequency(val, false, true);
+            this.setFrequency(val, true);
         });
 
         // Fine tune buttons
