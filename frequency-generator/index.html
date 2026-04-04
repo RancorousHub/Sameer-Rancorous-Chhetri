@@ -3,160 +3,503 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWizard - Sound Frequency Generator</title>
+    <title>SWizard v12 - Professional Sound Frequency Generator</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="app">
         <header class="header">
-            <h1 class="logo">SWizard</h1>
-            <p class="tagline">Precision Sound Frequency Generator</p>
+            <div class="header-top">
+                <h1 class="logo">SWizard</h1>
+                <span class="version-badge">v12</span>
+            </div>
+            <p class="tagline">Professional Sound Frequency Generator & Audio Toolkit</p>
         </header>
 
         <main class="main">
-            <!-- Waveform Visualizer -->
+            <!-- Visualizer -->
             <section class="visualizer-section">
-                <canvas id="waveformCanvas" aria-label="Waveform visualization"></canvas>
-                <canvas id="spectrumCanvas" aria-label="Spectrum visualization"></canvas>
+                <div class="viz-tabs">
+                    <button class="viz-tab active" data-viz="waveform">Waveform</button>
+                    <button class="viz-tab" data-viz="spectrum">Spectrum</button>
+                    <button class="viz-tab" data-viz="spectrogram">Spectrogram</button>
+                </div>
+                <canvas id="mainCanvas" aria-label="Audio visualization"></canvas>
+                <div class="viz-info">
+                    <span id="vizFreqDisplay">440 Hz</span>
+                    <span id="vizNoteDisplay">A4</span>
+                    <span id="vizDbDisplay">-∞ dB</span>
+                </div>
             </section>
 
-            <!-- Frequency Control -->
-            <section class="control-section">
+            <!-- Master Controls Row -->
+            <section class="master-row">
                 <div class="freq-display">
-                    <input type="number" id="freqInput" class="freq-input" value="440" min="20" max="20000" step="0.1" aria-label="Frequency in Hz">
+                    <input type="number" id="freqInput" class="freq-input" value="440" min="1" max="20000" step="0.1" aria-label="Frequency in Hz">
                     <span class="freq-unit">Hz</span>
                 </div>
                 <div class="freq-note" id="noteDisplay">A4</div>
+                <button id="playBtn" class="play-btn" aria-label="Play or stop tone">
+                    <svg id="playIcon" viewBox="0 0 24 24" width="36" height="36"><polygon points="6,3 20,12 6,21" fill="currentColor"/></svg>
+                    <svg id="stopIcon" viewBox="0 0 24 24" width="36" height="36" style="display:none"><rect x="5" y="4" width="14" height="16" rx="2" fill="currentColor"/></svg>
+                </button>
+            </section>
+
+            <!-- Frequency Slider -->
+            <section class="slider-section">
                 <div class="freq-slider-wrap">
-                    <span class="slider-label">20 Hz</span>
-                    <input type="range" id="freqSlider" class="freq-slider" min="20" max="20000" value="440" step="0.1" aria-label="Frequency slider">
+                    <span class="slider-label">1 Hz</span>
+                    <input type="range" id="freqSlider" class="freq-slider" min="1" max="20000" value="440" step="0.1" aria-label="Frequency slider">
                     <span class="slider-label">20 kHz</span>
                 </div>
                 <div class="fine-controls">
+                    <button class="fine-btn" data-delta="-100">-100</button>
                     <button class="fine-btn" data-delta="-10">-10</button>
                     <button class="fine-btn" data-delta="-1">-1</button>
                     <button class="fine-btn" data-delta="-0.1">-0.1</button>
                     <button class="fine-btn" data-delta="0.1">+0.1</button>
                     <button class="fine-btn" data-delta="1">+1</button>
                     <button class="fine-btn" data-delta="10">+10</button>
+                    <button class="fine-btn" data-delta="100">+100</button>
                 </div>
             </section>
 
-            <!-- Play Button -->
-            <section class="play-section">
-                <button id="playBtn" class="play-btn" aria-label="Play or stop tone">
-                    <svg id="playIcon" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true">
-                        <polygon points="6,3 20,12 6,21" fill="currentColor"/>
-                    </svg>
-                    <svg id="stopIcon" viewBox="0 0 24 24" width="48" height="48" style="display:none" aria-hidden="true">
-                        <rect x="5" y="4" width="14" height="16" rx="2" fill="currentColor"/>
-                    </svg>
-                </button>
-            </section>
+            <!-- Tabbed Panels -->
+            <div class="panel-tabs">
+                <button class="panel-tab active" data-panel="generator">Generator</button>
+                <button class="panel-tab" data-panel="layers">Multi-Layer</button>
+                <button class="panel-tab" data-panel="effects">Effects</button>
+                <button class="panel-tab" data-panel="tools">Tools</button>
+                <button class="panel-tab" data-panel="presets">Presets</button>
+            </div>
 
-            <!-- Waveform Selection -->
-            <section class="waveform-section">
-                <h2 class="section-title">Waveform</h2>
-                <div class="waveform-options">
-                    <button class="wave-btn active" data-wave="sine" aria-label="Sine wave">
-                        <svg viewBox="0 0 60 30" width="60" height="30">
-                            <path d="M0,15 Q15,0 30,15 Q45,30 60,15" stroke="currentColor" fill="none" stroke-width="2"/>
-                        </svg>
-                        <span>Sine</span>
-                    </button>
-                    <button class="wave-btn" data-wave="square" aria-label="Square wave">
-                        <svg viewBox="0 0 60 30" width="60" height="30">
-                            <path d="M0,25 L0,5 L15,5 L15,25 L30,25 L30,5 L45,5 L45,25 L60,25 L60,5" stroke="currentColor" fill="none" stroke-width="2"/>
-                        </svg>
-                        <span>Square</span>
-                    </button>
-                    <button class="wave-btn" data-wave="sawtooth" aria-label="Sawtooth wave">
-                        <svg viewBox="0 0 60 30" width="60" height="30">
-                            <path d="M0,25 L20,5 L20,25 L40,5 L40,25 L60,5" stroke="currentColor" fill="none" stroke-width="2"/>
-                        </svg>
-                        <span>Sawtooth</span>
-                    </button>
-                    <button class="wave-btn" data-wave="triangle" aria-label="Triangle wave">
-                        <svg viewBox="0 0 60 30" width="60" height="30">
-                            <path d="M0,25 L15,5 L30,25 L45,5 L60,25" stroke="currentColor" fill="none" stroke-width="2"/>
-                        </svg>
-                        <span>Triangle</span>
-                    </button>
+            <!-- PANEL: Generator -->
+            <div class="panel active" id="panel-generator">
+                <!-- Waveform -->
+                <div class="card">
+                    <h2 class="section-title">Waveform</h2>
+                    <div class="waveform-options">
+                        <button class="wave-btn active" data-wave="sine">
+                            <svg viewBox="0 0 60 30" width="60" height="30"><path d="M0,15 Q15,0 30,15 Q45,30 60,15" stroke="currentColor" fill="none" stroke-width="2"/></svg>
+                            <span>Sine</span>
+                        </button>
+                        <button class="wave-btn" data-wave="square">
+                            <svg viewBox="0 0 60 30" width="60" height="30"><path d="M0,25 L0,5 L15,5 L15,25 L30,25 L30,5 L45,5 L45,25 L60,25 L60,5" stroke="currentColor" fill="none" stroke-width="2"/></svg>
+                            <span>Square</span>
+                        </button>
+                        <button class="wave-btn" data-wave="sawtooth">
+                            <svg viewBox="0 0 60 30" width="60" height="30"><path d="M0,25 L20,5 L20,25 L40,5 L40,25 L60,5" stroke="currentColor" fill="none" stroke-width="2"/></svg>
+                            <span>Sawtooth</span>
+                        </button>
+                        <button class="wave-btn" data-wave="triangle">
+                            <svg viewBox="0 0 60 30" width="60" height="30"><path d="M0,25 L15,5 L30,25 L45,5 L60,25" stroke="currentColor" fill="none" stroke-width="2"/></svg>
+                            <span>Triangle</span>
+                        </button>
+                    </div>
                 </div>
-            </section>
 
-            <!-- Volume -->
-            <section class="volume-section">
-                <h2 class="section-title">Volume</h2>
-                <div class="volume-control">
-                    <svg viewBox="0 0 24 24" width="20" height="20" class="vol-icon">
-                        <path d="M3,9 L7,9 L12,4 L12,20 L7,15 L3,15 Z" fill="currentColor"/>
-                    </svg>
-                    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="50" aria-label="Volume">
-                    <span id="volumeValue" class="volume-value">50%</span>
+                <!-- Volume & Pan -->
+                <div class="card">
+                    <h2 class="section-title">Volume & Pan</h2>
+                    <div class="control-row">
+                        <label class="control-label">Volume</label>
+                        <input type="range" id="volumeSlider" class="styled-slider" min="0" max="100" value="50">
+                        <span id="volumeValue" class="control-value">50%</span>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Pan</label>
+                        <input type="range" id="panSlider" class="styled-slider" min="-100" max="100" value="0">
+                        <span id="panValue" class="control-value">C</span>
+                    </div>
                 </div>
-            </section>
 
-            <!-- Presets -->
-            <section class="presets-section">
-                <h2 class="section-title">Presets</h2>
-                <div class="preset-tabs">
-                    <button class="preset-tab active" data-tab="notes">Musical Notes</button>
-                    <button class="preset-tab" data-tab="tuning">Tuning</button>
-                    <button class="preset-tab" data-tab="scientific">Scientific</button>
-                    <button class="preset-tab" data-tab="binaural">Binaural</button>
-                </div>
-                <div class="preset-grid" id="presetGrid">
-                    <!-- Populated by JS -->
-                </div>
-            </section>
-
-            <!-- Binaural Beat Controls (hidden by default) -->
-            <section class="binaural-section" id="binauralSection" style="display:none">
-                <h2 class="section-title">Binaural Beat</h2>
-                <p class="binaural-note">Use headphones for binaural beats. A slightly different frequency plays in each ear.</p>
-                <div class="binaural-controls">
-                    <label class="binaural-label">
-                        Beat Frequency
-                        <div class="binaural-input-wrap">
-                            <input type="number" id="binauralBeat" class="binaural-input" value="10" min="1" max="40" step="0.5">
-                            <span class="freq-unit">Hz</span>
+                <!-- ADSR Envelope -->
+                <div class="card">
+                    <h2 class="section-title">ADSR Envelope</h2>
+                    <canvas id="adsrCanvas" class="adsr-canvas" width="300" height="80"></canvas>
+                    <div class="adsr-controls">
+                        <div class="adsr-knob">
+                            <label>Attack</label>
+                            <input type="range" id="attackSlider" class="mini-slider" min="0" max="2000" value="10">
+                            <span id="attackValue">10ms</span>
                         </div>
-                    </label>
-                    <div class="binaural-info" id="binauralInfo">
-                        Left: 435 Hz | Right: 445 Hz
+                        <div class="adsr-knob">
+                            <label>Decay</label>
+                            <input type="range" id="decaySlider" class="mini-slider" min="0" max="2000" value="100">
+                            <span id="decayValue">100ms</span>
+                        </div>
+                        <div class="adsr-knob">
+                            <label>Sustain</label>
+                            <input type="range" id="sustainSlider" class="mini-slider" min="0" max="100" value="80">
+                            <span id="sustainValue">80%</span>
+                        </div>
+                        <div class="adsr-knob">
+                            <label>Release</label>
+                            <input type="range" id="releaseSlider" class="mini-slider" min="0" max="3000" value="200">
+                            <span id="releaseValue">200ms</span>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- Sweep Controls -->
-            <section class="sweep-section">
-                <h2 class="section-title">Frequency Sweep</h2>
-                <div class="sweep-controls">
-                    <div class="sweep-range">
-                        <label>
-                            From
-                            <input type="number" id="sweepFrom" class="sweep-input" value="20" min="20" max="20000">
-                            <span class="freq-unit">Hz</span>
-                        </label>
-                        <label>
-                            To
-                            <input type="number" id="sweepTo" class="sweep-input" value="20000" min="20" max="20000">
-                            <span class="freq-unit">Hz</span>
-                        </label>
-                        <label>
-                            Duration
-                            <input type="number" id="sweepDuration" class="sweep-input" value="5" min="1" max="60">
-                            <span class="freq-unit">sec</span>
-                        </label>
+                <!-- Harmonics -->
+                <div class="card">
+                    <h2 class="section-title">Harmonics</h2>
+                    <div class="harmonics-grid" id="harmonicsGrid">
+                        <!-- 8 harmonic sliders generated by JS -->
                     </div>
-                    <button id="sweepBtn" class="sweep-btn">Start Sweep</button>
                 </div>
-            </section>
+
+                <!-- Noise Generator -->
+                <div class="card">
+                    <h2 class="section-title">Noise Generator</h2>
+                    <div class="noise-options">
+                        <button class="noise-btn" data-noise="off">Off</button>
+                        <button class="noise-btn" data-noise="white">White</button>
+                        <button class="noise-btn" data-noise="pink">Pink</button>
+                        <button class="noise-btn" data-noise="brown">Brown</button>
+                        <button class="noise-btn" data-noise="blue">Blue</button>
+                        <button class="noise-btn" data-noise="violet">Violet</button>
+                    </div>
+                    <div class="control-row" style="margin-top:10px">
+                        <label class="control-label">Noise Vol</label>
+                        <input type="range" id="noiseVolSlider" class="styled-slider" min="0" max="100" value="30">
+                        <span id="noiseVolValue" class="control-value">30%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL: Multi-Layer -->
+            <div class="panel" id="panel-layers">
+                <div class="card">
+                    <h2 class="section-title">Tone Layers</h2>
+                    <p class="card-desc">Stack up to 8 simultaneous tones with individual settings.</p>
+                    <div id="layersList" class="layers-list"></div>
+                    <button id="addLayerBtn" class="action-btn">+ Add Layer</button>
+                </div>
+
+                <!-- Chord Generator -->
+                <div class="card">
+                    <h2 class="section-title">Chord Generator</h2>
+                    <div class="chord-controls">
+                        <div class="control-row">
+                            <label class="control-label">Root</label>
+                            <select id="chordRoot" class="styled-select">
+                                <option value="C">C</option><option value="C#">C#</option>
+                                <option value="D">D</option><option value="D#">D#</option>
+                                <option value="E">E</option><option value="F">F</option>
+                                <option value="F#">F#</option><option value="G">G</option>
+                                <option value="G#">G#</option><option value="A" selected>A</option>
+                                <option value="A#">A#</option><option value="B">B</option>
+                            </select>
+                        </div>
+                        <div class="control-row">
+                            <label class="control-label">Octave</label>
+                            <select id="chordOctave" class="styled-select">
+                                <option value="2">2</option><option value="3">3</option>
+                                <option value="4" selected>4</option><option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </div>
+                        <div class="control-row">
+                            <label class="control-label">Type</label>
+                            <select id="chordType" class="styled-select">
+                                <option value="major">Major</option>
+                                <option value="minor">Minor</option>
+                                <option value="dim">Diminished</option>
+                                <option value="aug">Augmented</option>
+                                <option value="maj7">Major 7th</option>
+                                <option value="min7">Minor 7th</option>
+                                <option value="dom7">Dominant 7th</option>
+                                <option value="sus2">Sus2</option>
+                                <option value="sus4">Sus4</option>
+                                <option value="power">Power (5th)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="playChordBtn" class="action-btn">Play Chord</button>
+                </div>
+            </div>
+
+            <!-- PANEL: Effects -->
+            <div class="panel" id="panel-effects">
+                <!-- Filter -->
+                <div class="card">
+                    <h2 class="section-title">Filter</h2>
+                    <div class="filter-types">
+                        <button class="filter-btn active" data-filter="none">Off</button>
+                        <button class="filter-btn" data-filter="lowpass">Low Pass</button>
+                        <button class="filter-btn" data-filter="highpass">High Pass</button>
+                        <button class="filter-btn" data-filter="bandpass">Band Pass</button>
+                        <button class="filter-btn" data-filter="notch">Notch</button>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Cutoff</label>
+                        <input type="range" id="filterCutoff" class="styled-slider" min="20" max="20000" value="1000">
+                        <span id="filterCutoffValue" class="control-value">1000 Hz</span>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Q / Resonance</label>
+                        <input type="range" id="filterQ" class="styled-slider" min="1" max="300" value="10">
+                        <span id="filterQValue" class="control-value">1.0</span>
+                    </div>
+                </div>
+
+                <!-- Modulation -->
+                <div class="card">
+                    <h2 class="section-title">Modulation</h2>
+                    <div class="mod-types">
+                        <button class="mod-btn active" data-mod="none">Off</button>
+                        <button class="mod-btn" data-mod="am">AM</button>
+                        <button class="mod-btn" data-mod="fm">FM</button>
+                        <button class="mod-btn" data-mod="tremolo">Tremolo</button>
+                        <button class="mod-btn" data-mod="vibrato">Vibrato</button>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Rate</label>
+                        <input type="range" id="modRate" class="styled-slider" min="1" max="200" value="5">
+                        <span id="modRateValue" class="control-value">5 Hz</span>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Depth</label>
+                        <input type="range" id="modDepth" class="styled-slider" min="0" max="100" value="50">
+                        <span id="modDepthValue" class="control-value">50%</span>
+                    </div>
+                </div>
+
+                <!-- Delay -->
+                <div class="card">
+                    <h2 class="section-title">Delay</h2>
+                    <div class="control-row">
+                        <label class="control-label">Enable</label>
+                        <button id="delayToggle" class="toggle-btn">Off</button>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Time</label>
+                        <input type="range" id="delayTime" class="styled-slider" min="10" max="1000" value="300">
+                        <span id="delayTimeValue" class="control-value">300ms</span>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Feedback</label>
+                        <input type="range" id="delayFeedback" class="styled-slider" min="0" max="90" value="40">
+                        <span id="delayFeedbackValue" class="control-value">40%</span>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Mix</label>
+                        <input type="range" id="delayMix" class="styled-slider" min="0" max="100" value="30">
+                        <span id="delayMixValue" class="control-value">30%</span>
+                    </div>
+                </div>
+
+                <!-- Reverb -->
+                <div class="card">
+                    <h2 class="section-title">Reverb</h2>
+                    <div class="control-row">
+                        <label class="control-label">Enable</label>
+                        <button id="reverbToggle" class="toggle-btn">Off</button>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Size</label>
+                        <input type="range" id="reverbSize" class="styled-slider" min="1" max="100" value="50">
+                        <span id="reverbSizeValue" class="control-value">50%</span>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Decay</label>
+                        <input type="range" id="reverbDecay" class="styled-slider" min="1" max="100" value="50">
+                        <span id="reverbDecayValue" class="control-value">50%</span>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Mix</label>
+                        <input type="range" id="reverbMix" class="styled-slider" min="0" max="100" value="20">
+                        <span id="reverbMixValue" class="control-value">20%</span>
+                    </div>
+                </div>
+
+                <!-- Distortion -->
+                <div class="card">
+                    <h2 class="section-title">Distortion</h2>
+                    <div class="control-row">
+                        <label class="control-label">Enable</label>
+                        <button id="distortionToggle" class="toggle-btn">Off</button>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Amount</label>
+                        <input type="range" id="distortionAmount" class="styled-slider" min="0" max="100" value="20">
+                        <span id="distortionAmountValue" class="control-value">20</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL: Tools -->
+            <div class="panel" id="panel-tools">
+                <!-- Binaural Beats -->
+                <div class="card">
+                    <h2 class="section-title">Binaural Beats</h2>
+                    <p class="card-desc">Use headphones. Different frequencies in each ear create a perceived beat.</p>
+                    <div class="control-row">
+                        <label class="control-label">Enable</label>
+                        <button id="binauralToggle" class="toggle-btn">Off</button>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Beat Freq</label>
+                        <input type="range" id="binauralBeat" class="styled-slider" min="1" max="40" value="10" step="0.5">
+                        <span id="binauralBeatValue" class="control-value">10 Hz</span>
+                    </div>
+                    <div class="binaural-info" id="binauralInfo">Left: 435 Hz | Right: 445 Hz</div>
+                    <div class="binaural-presets">
+                        <button class="mini-preset" data-beat="2" data-label="Delta">Delta 2Hz</button>
+                        <button class="mini-preset" data-beat="6" data-label="Theta">Theta 6Hz</button>
+                        <button class="mini-preset" data-beat="10" data-label="Alpha">Alpha 10Hz</button>
+                        <button class="mini-preset" data-beat="20" data-label="Beta">Beta 20Hz</button>
+                        <button class="mini-preset" data-beat="40" data-label="Gamma">Gamma 40Hz</button>
+                    </div>
+                </div>
+
+                <!-- Isochronic Tones -->
+                <div class="card">
+                    <h2 class="section-title">Isochronic Tones</h2>
+                    <p class="card-desc">Rhythmic on/off pulsing at a specific rate. No headphones needed.</p>
+                    <div class="control-row">
+                        <label class="control-label">Enable</label>
+                        <button id="isoToggle" class="toggle-btn">Off</button>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Pulse Rate</label>
+                        <input type="range" id="isoRate" class="styled-slider" min="1" max="40" value="10">
+                        <span id="isoRateValue" class="control-value">10 Hz</span>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">Duty Cycle</label>
+                        <input type="range" id="isoDuty" class="styled-slider" min="10" max="90" value="50">
+                        <span id="isoDutyValue" class="control-value">50%</span>
+                    </div>
+                </div>
+
+                <!-- Frequency Sweep -->
+                <div class="card">
+                    <h2 class="section-title">Frequency Sweep</h2>
+                    <div class="sweep-controls">
+                        <div class="sweep-range">
+                            <label>From <input type="number" id="sweepFrom" class="num-input" value="20" min="1" max="20000"> Hz</label>
+                            <label>To <input type="number" id="sweepTo" class="num-input" value="20000" min="1" max="20000"> Hz</label>
+                            <label>Duration <input type="number" id="sweepDuration" class="num-input" value="5" min="1" max="120"> sec</label>
+                        </div>
+                        <div class="sweep-mode">
+                            <button class="mini-btn active" data-sweep-mode="log">Logarithmic</button>
+                            <button class="mini-btn" data-sweep-mode="linear">Linear</button>
+                        </div>
+                        <div class="control-row">
+                            <label class="control-label">Loop</label>
+                            <button id="sweepLoopToggle" class="toggle-btn">Off</button>
+                        </div>
+                        <button id="sweepBtn" class="action-btn">Start Sweep</button>
+                    </div>
+                </div>
+
+                <!-- Tuner (Mic Input) -->
+                <div class="card">
+                    <h2 class="section-title">Frequency Detector / Tuner</h2>
+                    <p class="card-desc">Use your microphone to detect the frequency of incoming audio.</p>
+                    <button id="tunerBtn" class="action-btn">Start Listening</button>
+                    <div class="tuner-display" id="tunerDisplay" style="display:none">
+                        <div class="tuner-freq" id="tunerFreq">-- Hz</div>
+                        <div class="tuner-note" id="tunerNote">--</div>
+                        <div class="tuner-cents" id="tunerCents">--</div>
+                        <canvas id="tunerMeter" class="tuner-meter" width="300" height="40"></canvas>
+                    </div>
+                </div>
+
+                <!-- Tone Sequencer -->
+                <div class="card">
+                    <h2 class="section-title">Tone Sequencer</h2>
+                    <p class="card-desc">Create a sequence of tones to play in order.</p>
+                    <div id="sequenceList" class="sequence-list"></div>
+                    <div class="seq-add-row">
+                        <input type="number" id="seqFreqInput" class="num-input" value="440" min="1" max="20000" placeholder="Freq">
+                        <input type="number" id="seqDurInput" class="num-input" value="500" min="50" max="10000" placeholder="ms">
+                        <button id="seqAddBtn" class="mini-btn">Add</button>
+                    </div>
+                    <div class="seq-controls">
+                        <button id="seqPlayBtn" class="action-btn">Play Sequence</button>
+                        <button id="seqClearBtn" class="action-btn secondary">Clear</button>
+                        <div class="control-row" style="margin-top:8px">
+                            <label class="control-label">Loop</label>
+                            <button id="seqLoopToggle" class="toggle-btn">Off</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timer -->
+                <div class="card">
+                    <h2 class="section-title">Auto-Stop Timer</h2>
+                    <div class="timer-controls">
+                        <div class="timer-presets">
+                            <button class="mini-preset" data-timer="60">1 min</button>
+                            <button class="mini-preset" data-timer="300">5 min</button>
+                            <button class="mini-preset" data-timer="600">10 min</button>
+                            <button class="mini-preset" data-timer="1800">30 min</button>
+                            <button class="mini-preset" data-timer="3600">1 hr</button>
+                        </div>
+                        <div class="timer-display" id="timerDisplay">No timer set</div>
+                        <button id="timerCancelBtn" class="action-btn secondary" style="display:none">Cancel Timer</button>
+                    </div>
+                </div>
+
+                <!-- Recorder -->
+                <div class="card">
+                    <h2 class="section-title">Record & Export</h2>
+                    <p class="card-desc">Record the output and download as WAV file.</p>
+                    <div class="recorder-controls">
+                        <button id="recordBtn" class="action-btn">Start Recording</button>
+                        <span id="recordStatus" class="record-status"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL: Presets -->
+            <div class="panel" id="panel-presets">
+                <!-- Preset Categories -->
+                <div class="card">
+                    <h2 class="section-title">Preset Library</h2>
+                    <div class="preset-tabs">
+                        <button class="preset-tab active" data-tab="notes">Notes</button>
+                        <button class="preset-tab" data-tab="tuning">Tuning</button>
+                        <button class="preset-tab" data-tab="scientific">Scientific</button>
+                        <button class="preset-tab" data-tab="solfeggio">Solfeggio</button>
+                        <button class="preset-tab" data-tab="chakra">Chakra</button>
+                        <button class="preset-tab" data-tab="healing">Healing</button>
+                        <button class="preset-tab" data-tab="brainwave">Brainwave</button>
+                        <button class="preset-tab" data-tab="planetary">Planetary</button>
+                    </div>
+                    <div class="preset-grid" id="presetGrid"></div>
+                </div>
+
+                <!-- Piano Keyboard -->
+                <div class="card">
+                    <h2 class="section-title">Piano Keyboard</h2>
+                    <div class="piano-controls">
+                        <label>Octave: <select id="pianoOctave" class="styled-select">
+                            <option value="2">2</option><option value="3">3</option>
+                            <option value="4" selected>4</option><option value="5">5</option>
+                            <option value="6">6</option>
+                        </select></label>
+                    </div>
+                    <div class="piano-keyboard" id="pianoKeyboard"></div>
+                </div>
+
+                <!-- Save/Load Custom Presets -->
+                <div class="card">
+                    <h2 class="section-title">My Presets</h2>
+                    <div class="custom-presets">
+                        <button id="savePresetBtn" class="action-btn">Save Current Settings</button>
+                        <div id="customPresetGrid" class="preset-grid"></div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <footer class="footer">
-            <p>Built with the Web Audio API for precise, real-time frequency generation.</p>
+            <p>SWizard v12 &mdash; Professional Sound Frequency Generator</p>
+            <p class="footer-sub">Built with Web Audio API | No data leaves your browser</p>
         </footer>
     </div>
 
