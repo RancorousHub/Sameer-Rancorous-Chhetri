@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWizard - Sound Frequency Generator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1 class="logo">SWizard</h1>
+            <p class="tagline">Precision Sound Frequency Generator</p>
+        </header>
+
+        <main class="main">
+            <!-- Waveform Visualizer -->
+            <section class="visualizer-section">
+                <canvas id="waveformCanvas" aria-label="Waveform visualization"></canvas>
+                <canvas id="spectrumCanvas" aria-label="Spectrum visualization"></canvas>
+            </section>
+
+            <!-- Frequency Control -->
+            <section class="control-section">
+                <div class="freq-display">
+                    <input type="number" id="freqInput" class="freq-input" value="440" min="20" max="20000" step="0.1" aria-label="Frequency in Hz">
+                    <span class="freq-unit">Hz</span>
+                </div>
+                <div class="freq-note" id="noteDisplay">A4</div>
+                <div class="freq-slider-wrap">
+                    <span class="slider-label">20 Hz</span>
+                    <input type="range" id="freqSlider" class="freq-slider" min="20" max="20000" value="440" step="0.1" aria-label="Frequency slider">
+                    <span class="slider-label">20 kHz</span>
+                </div>
+                <div class="fine-controls">
+                    <button class="fine-btn" data-delta="-10">-10</button>
+                    <button class="fine-btn" data-delta="-1">-1</button>
+                    <button class="fine-btn" data-delta="-0.1">-0.1</button>
+                    <button class="fine-btn" data-delta="0.1">+0.1</button>
+                    <button class="fine-btn" data-delta="1">+1</button>
+                    <button class="fine-btn" data-delta="10">+10</button>
+                </div>
+            </section>
+
+            <!-- Play Button -->
+            <section class="play-section">
+                <button id="playBtn" class="play-btn" aria-label="Play or stop tone">
+                    <svg id="playIcon" viewBox="0 0 24 24" width="48" height="48" aria-hidden="true">
+                        <polygon points="6,3 20,12 6,21" fill="currentColor"/>
+                    </svg>
+                    <svg id="stopIcon" viewBox="0 0 24 24" width="48" height="48" style="display:none" aria-hidden="true">
+                        <rect x="5" y="4" width="14" height="16" rx="2" fill="currentColor"/>
+                    </svg>
+                </button>
+            </section>
+
+            <!-- Waveform Selection -->
+            <section class="waveform-section">
+                <h2 class="section-title">Waveform</h2>
+                <div class="waveform-options">
+                    <button class="wave-btn active" data-wave="sine" aria-label="Sine wave">
+                        <svg viewBox="0 0 60 30" width="60" height="30">
+                            <path d="M0,15 Q15,0 30,15 Q45,30 60,15" stroke="currentColor" fill="none" stroke-width="2"/>
+                        </svg>
+                        <span>Sine</span>
+                    </button>
+                    <button class="wave-btn" data-wave="square" aria-label="Square wave">
+                        <svg viewBox="0 0 60 30" width="60" height="30">
+                            <path d="M0,25 L0,5 L15,5 L15,25 L30,25 L30,5 L45,5 L45,25 L60,25 L60,5" stroke="currentColor" fill="none" stroke-width="2"/>
+                        </svg>
+                        <span>Square</span>
+                    </button>
+                    <button class="wave-btn" data-wave="sawtooth" aria-label="Sawtooth wave">
+                        <svg viewBox="0 0 60 30" width="60" height="30">
+                            <path d="M0,25 L20,5 L20,25 L40,5 L40,25 L60,5" stroke="currentColor" fill="none" stroke-width="2"/>
+                        </svg>
+                        <span>Sawtooth</span>
+                    </button>
+                    <button class="wave-btn" data-wave="triangle" aria-label="Triangle wave">
+                        <svg viewBox="0 0 60 30" width="60" height="30">
+                            <path d="M0,25 L15,5 L30,25 L45,5 L60,25" stroke="currentColor" fill="none" stroke-width="2"/>
+                        </svg>
+                        <span>Triangle</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Volume -->
+            <section class="volume-section">
+                <h2 class="section-title">Volume</h2>
+                <div class="volume-control">
+                    <svg viewBox="0 0 24 24" width="20" height="20" class="vol-icon">
+                        <path d="M3,9 L7,9 L12,4 L12,20 L7,15 L3,15 Z" fill="currentColor"/>
+                    </svg>
+                    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="50" aria-label="Volume">
+                    <span id="volumeValue" class="volume-value">50%</span>
+                </div>
+            </section>
+
+            <!-- Presets -->
+            <section class="presets-section">
+                <h2 class="section-title">Presets</h2>
+                <div class="preset-tabs">
+                    <button class="preset-tab active" data-tab="notes">Musical Notes</button>
+                    <button class="preset-tab" data-tab="tuning">Tuning</button>
+                    <button class="preset-tab" data-tab="scientific">Scientific</button>
+                    <button class="preset-tab" data-tab="binaural">Binaural</button>
+                </div>
+                <div class="preset-grid" id="presetGrid">
+                    <!-- Populated by JS -->
+                </div>
+            </section>
+
+            <!-- Binaural Beat Controls (hidden by default) -->
+            <section class="binaural-section" id="binauralSection" style="display:none">
+                <h2 class="section-title">Binaural Beat</h2>
+                <p class="binaural-note">Use headphones for binaural beats. A slightly different frequency plays in each ear.</p>
+                <div class="binaural-controls">
+                    <label class="binaural-label">
+                        Beat Frequency
+                        <div class="binaural-input-wrap">
+                            <input type="number" id="binauralBeat" class="binaural-input" value="10" min="1" max="40" step="0.5">
+                            <span class="freq-unit">Hz</span>
+                        </div>
+                    </label>
+                    <div class="binaural-info" id="binauralInfo">
+                        Left: 435 Hz | Right: 445 Hz
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sweep Controls -->
+            <section class="sweep-section">
+                <h2 class="section-title">Frequency Sweep</h2>
+                <div class="sweep-controls">
+                    <div class="sweep-range">
+                        <label>
+                            From
+                            <input type="number" id="sweepFrom" class="sweep-input" value="20" min="20" max="20000">
+                            <span class="freq-unit">Hz</span>
+                        </label>
+                        <label>
+                            To
+                            <input type="number" id="sweepTo" class="sweep-input" value="20000" min="20" max="20000">
+                            <span class="freq-unit">Hz</span>
+                        </label>
+                        <label>
+                            Duration
+                            <input type="number" id="sweepDuration" class="sweep-input" value="5" min="1" max="60">
+                            <span class="freq-unit">sec</span>
+                        </label>
+                    </div>
+                    <button id="sweepBtn" class="sweep-btn">Start Sweep</button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Built with the Web Audio API for precise, real-time frequency generation.</p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

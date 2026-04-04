@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rancorous Hub - Projects</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e17;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #818cf8, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .tagline {
+            color: #94a3b8;
+            margin-bottom: 48px;
+        }
+        .projects {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        a.card {
+            display: block;
+            padding: 24px;
+            background: #111827;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #e2e8f0;
+            transition: all 0.2s;
+        }
+        a.card:hover {
+            border-color: #6366f1;
+            background: #1a2332;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+        }
+        .card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+        }
+        .card p {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rancorous Hub</h1>
+        <p class="tagline">Project Portfolio</p>
+        <div class="projects">
+            <a class="card" href="frequency-generator/">
+                <h2>SWizard - Frequency Generator</h2>
+                <p>Precision sound frequency generator with waveform visualizer, binaural beats, and sweep controls.</p>
+            </a>
+            <a class="card" href="freelance-site/">
+                <h2>Freelance Portfolio</h2>
+                <p>Professional freelance developer portfolio site.</p>
+            </a>
+            <a class="card" href="affiliate-site/">
+                <h2>GadgetPick - Affiliate Reviews</h2>
+                <p>Tech gadget review and affiliate recommendation site.</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
